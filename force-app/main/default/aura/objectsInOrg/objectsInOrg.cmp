@@ -1,24 +1,42 @@
-<aura:component controller="QueryBuilderLightning" access="global">
-    <aura:attribute name="options" type="List" />
+<aura:component controller="QueryBuilderLightning">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
     <aura:attribute name="selectedValue" type="String" />
-    <!-- multiselect box attributes -->
-    <aura:attribute name="fieldOptions" type="List"/>
-    
-    <!-- Init method -->
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-    <lightning:select name="Objects" label="Select object:" aura:id="objId" value="{!v.selectedValue}" onchange="{!c.fieldsOnObjectSelect}">
-        <aura:iteration items="{!v.options}" var="objectname">
-            <option value="{!objectname}" text="{!objectname}" />
+    <aura:attribute name="options" type="List" />
+
+    <!-- Dual List Box Attribute -->
+    <aura:attribute name="dualOptions" type="List" />
+    <aura:attribute name="selectedFields" type="List" />
+
+    <aura:attribute name="queryBoxText" type="String" default=" " />
+
+    <aura:attribute name="sObjects" type="List[]" />
+
+    <!-- Dual List Box Attribute -->
+
+    <lightning:select aura:id="dropdown" name="objects" label="Select an object :" value="{!v.selectedValue}"
+        required="true" onchange="{! c.handleSelection}">
+        <aura:iteration items="{!v.options}" var="objectName">
+            <option value="{!objectName}" text="{!objectName}" />
         </aura:iteration>
     </lightning:select>
-    <!-- multiselectbox for fields -->
-    <lightning:dualListbox name="fields"
-                           label= "Select Fields"
-                           sourceLabel="Available"
-                           selectedLabel="Selected"
-                           fieldLevelHelp="Select your fields to display"
-                           options="{!v.fieldOptions}"
-                           value=
-                           onchange="{! c.handleSelectField }"/>
-   
+
+    <lightning:dualListbox name="fields" label="Select Fields" sourceLabel="Available Fields"
+        selectedLabel="Selected Fields" fieldLevelHelp="Select fields to query" options="{!v.dualOptions}"
+        value="{!v.selectedFields}" onchange="{! c.getQueryText }" />
+
+    <lightning:textarea name="querybox" readonly="true" value="{!v.queryBoxText}" label="Query result" />
+    <lightning:button variant="brand" label="Query" onclick="{!c.getQueryResult}" />
+
+    <table>
+        <aura:iteration items="{!v.selectedFields}" var="header">
+            <th>{!header}</th>
+        </aura:iteration>
+        <aura:iteration items="{!v.sObjects}" var="sObject">
+            <tr>
+                <aura:iteration items="{!sObject}" var="data">
+                    <td>{!data}</td>
+                </aura:iteration>
+            </tr>
+        </aura:iteration>
+    </table>
 </aura:component>
