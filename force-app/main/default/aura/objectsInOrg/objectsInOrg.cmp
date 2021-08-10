@@ -1,0 +1,24 @@
+<aura:component controller="QueryBuilderLightning" access="global">
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="selectedValue" type="String" />
+    <!-- multiselect box attributes -->
+    <aura:attribute name="fieldOptions" type="List"/>
+    
+    <!-- Init method -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:select name="Objects" label="Select object:" aura:id="objId" value="{!v.selectedValue}" onchange="{!c.fieldsOnObjectSelect}">
+        <aura:iteration items="{!v.options}" var="objectname">
+            <option value="{!objectname}" text="{!objectname}" />
+        </aura:iteration>
+    </lightning:select>
+    <!-- multiselectbox for fields -->
+    <lightning:dualListbox name="fields"
+                           label= "Select Fields"
+                           sourceLabel="Available"
+                           selectedLabel="Selected"
+                           fieldLevelHelp="Select your fields to display"
+                           options="{!v.fieldOptions}"
+                           value=
+                           onchange="{! c.handleSelectField }"/>
+   
+</aura:component>

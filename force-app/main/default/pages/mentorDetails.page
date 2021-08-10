@@ -1,0 +1,162 @@
+<apex:page Controller="sampleInstitute">
+    <br />
+    <style>
+        table,
+        th,
+        td {
+            border: 1pt solid black;
+            border-collapse: collapse;
+
+        }
+
+        /* #invisible td {
+            border: 1pt solid  #ddd;
+        } */
+
+        td {
+            border: 1pt solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            outline: 1pt solid black;
+        }
+
+        .blank {
+            border: none;
+            width: 15%;
+        }
+
+        caption {
+            text-align: left;
+        }
+
+        .secondTable {
+            border: none;
+            border-collapse: collapse;
+            outline: none;
+        }
+
+        .marg {
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    </style>
+    <br />
+    <apex:form styleClass="marg">
+        <apex:selectList size="1" title="Select Institute" value="{!instId}">
+            <!-- <apex:param value="{!instId}" assignTo="{!instId}" name="currentInstitute" /> -->
+            <apex:selectOption itemValue='' itemLabel="-- Select Institute --" />
+            <apex:selectOptions Value="{!myInstitutes}" />
+            <apex:actionSupport event="onchange" reRender="mentorsOfInst" action="{!getMentors}" />
+
+        </apex:selectList>
+
+        <br />
+        <br />
+        <br />
+        <br /> 
+        <apex:outputPanel id="mentorsOfInst">
+            <apex:outputPanel rendered="{!NOT (ISNULL(instId))}">
+                <!--  -->
+                <!-- rendered="{!if(instId!='' , true, false)}" -->
+                <!-- {!instId} -->
+                <!-- {!NOT (ISNULL(instId))} -->
+                <h1>
+                    <i>All Mentors</i>
+                </h1>
+                <table>
+                    <tr>
+                        <th>Mentors Name</th>
+                        <!-- <th class="blank"></th> -->
+                        <th>Designation</th>
+                    </tr>
+
+                    <apex:repeat var="mentor" value="{!mentors}">
+                        <tr>
+                            <td>
+                                <apex:commandLink value="{!mentor.Name}" action="{!getStudents}">
+                                    <apex:param value="{!mentor.Id}" assignTo="{!mentId}" name="myMentorDetails" />
+                                </apex:commandLink>
+                            </td>
+                            <!-- <td class="blank"></td> -->
+                            <td>{!mentor.Designation__c}</td>
+                        </tr>
+                        <!-- <apex:actionSupport reRender="stuOfMent" action="{!getStudents}"/> -->
+
+                        <apex:outputPanel rendered="{!if(mentId==mentor.Id , true ,false)}">
+                            <tr>
+                                <td>
+                                    <table class="secondTable">
+                                        <tr class="secondTable">
+                                            <th class="blank"></th>
+                                            <th>Student Name</th>
+                                            <!-- <th>CLass</th>
+                                        <th>City</th>
+                                        <th>State</th> -->
+                                        </tr>
+                                        <apex:repeat var="student" value="{!students}">
+                                            <tr class="secondTable">
+                                                <td class="blank"></td>
+                                                <td>{!student.Name}</td>
+                                                <!-- <td>{!student.Class__c}</td>
+                                            <td>{!student.City__c}</td>
+                                            <td>{!student.State__c}</td> -->
+                                            </tr>
+
+                                        </apex:repeat>
+                                    </table>
+                                </td>
+
+                                <td>
+                                    <table class="secondTable">
+                                        <tr>
+                                            <!-- <th class="blank"></th>
+                                        <th>Student Name</th> -->
+                                            <th>CLass</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                        </tr>
+                                        <apex:repeat var="student" value="{!students}">
+                                            <tr>
+                                                <!-- <td class="blank"></td>
+                                            <td>{!student.Name}</td> -->
+                                                <td>{!student.Class__c}</td>
+                                                <td>{!student.City__c}</td>
+                                                <td>{!student.State__c}</td>
+                                            </tr>
+
+                                        </apex:repeat>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </apex:outputPanel>
+
+                    </apex:repeat>
+
+
+                </table>
+            </apex:outputPanel>
+        </apex:outputPanel>
+
+
+
+        <!-- <apex:dataTable value="{!myMentors}" var="mentor" id="theTable"
+        rowClasses="odd,even" styleClass="tableClass">
+        <apex:facet name="header"><b>All Mentors</b> </apex:facet>
+ 
+        <apex:column>
+            <apex:facet name="header">Mentor Name</apex:facet>
+            <apex:outputText value="{!mentor.Name}"/>
+        </apex:column>
+ 
+        <apex:column>
+            <apex:facet name="header">Designation</apex:facet>
+            <apex:outputText value="{!mentor.Designation__c}"/>
+        </apex:column>
+ 
+    </apex:dataTable> -->
+
+    </apex:form>
+</apex:page>
