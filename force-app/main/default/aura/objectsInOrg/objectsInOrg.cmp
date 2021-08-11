@@ -2,6 +2,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.init}" />
     <aura:attribute name="selectedValue" type="String" />
     <aura:attribute name="options" type="List" />
+    <aura:attribute name="fieldsSelected" type="Boolean" />
 
     <!-- Dual List Box Attribute -->
     <aura:attribute name="dualOptions" type="List" />
@@ -18,24 +19,25 @@
             <option value="{!objectName}" text="{!objectName}" />
         </aura:iteration>
     </lightning:select>
-    
+
     <lightning:dualListbox name="fields" label="Select Fields" sourceLabel="Available Fields"
         selectedLabel="Selected Fields" fieldLevelHelp="Select fields to query" options="{!v.dualOptions}"
         value="{!v.selectedFields}" onchange="{! c.getQueryText }" />
 
     <lightning:textarea name="querybox" readonly="true" value="{!v.queryBoxText}" label="Query result" />
     <lightning:button variant="brand" label="Query" onclick="{!c.getQueryResult}" />
-
-    <table>
-        <aura:iteration items="{!v.selectedFields}" var="header">
-            <th>{!header}</th>
-        </aura:iteration>
-        <aura:iteration items="{!v.sObjects}" var="sObject">
-            <tr>
-                <aura:iteration items="{!sObject}" var="data">
-                    <td>{!data}</td>
-                </aura:iteration>
-            </tr>
-        </aura:iteration>
-    </table>
+    <aura:if isTrue="{!v.fieldsSelected}">
+        <table>
+            <aura:iteration items="{!v.selectedFields}" var="header">
+                <th>{!header}</th>
+            </aura:iteration>
+            <aura:iteration items="{!v.sObjects}" var="sObject">
+                <tr>
+                    <aura:iteration items="{!sObject}" var="data">
+                        <td>{!data}</td>
+                    </aura:iteration>
+                </tr>
+            </aura:iteration>
+        </table>
+    </aura:if>
 </aura:component>
