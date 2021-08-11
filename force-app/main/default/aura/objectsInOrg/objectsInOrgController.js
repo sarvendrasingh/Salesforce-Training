@@ -1,10 +1,10 @@
 ({
   init: function (component, event, helper) {
-    var action = component.get("c.getObjectName");
+    let action = component.get("c.getObjectName");
     action.setCallback(this, function (response) {
-      var state = response.getState();
+      let state = response.getState();
       if (state === "SUCCESS") {
-        var allValues = response.getReturnValue();
+        let allValues = response.getReturnValue();
         component.set("v.options", allValues);
       }
     });

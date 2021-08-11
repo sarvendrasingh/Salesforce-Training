@@ -12,14 +12,14 @@
     <aura:attribute name="sObjects" type="List[]" />
 
     <!-- Dual List Box Attribute -->
-
+<!-- <article style="width: 50%;"> -->
     <lightning:select aura:id="dropdown" name="objects" label="Select an object :" value="{!v.selectedValue}"
         required="true" onchange="{! c.handleSelection}">
         <aura:iteration items="{!v.options}" var="objectName">
             <option value="{!objectName}" text="{!objectName}" />
         </aura:iteration>
     </lightning:select>
-
+<!-- </article> -->
     <lightning:dualListbox name="fields" label="Select Fields" sourceLabel="Available Fields"
         selectedLabel="Selected Fields" fieldLevelHelp="Select fields to query" options="{!v.dualOptions}"
         value="{!v.selectedFields}" onchange="{! c.getQueryText }" />
