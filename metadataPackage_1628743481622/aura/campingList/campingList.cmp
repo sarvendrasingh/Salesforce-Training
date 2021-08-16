@@ -1,0 +1,44 @@
+<aura:component controller="CampingListController">
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="items" type="Camping_Item__c[]" />
+    <aura:attribute name="newItem" type="Camping_Item__c" default="{'sobjectType': 'Camping_Item__c',
+                'Name':'',
+                'Quantity__c':0 ,
+                'Price__c':0 ,
+                'Packed__c': false }" />
+
+    <ol>
+        <li>Bug Spray</li>
+        <li>Bear Repellant</li>
+        <li>Goat Food</li>
+    </ol>
+    <!-- CREATE NEW EXPENSE -->
+    <div aria-labelledby="newcampingform">
+        <!-- BOXED AREA -->
+        <fieldset class="slds-box slds-theme_default slds-container_small">
+            <legend id="newcampingform" class="slds-text-heading_small
+              slds-p-vertical_medium">
+                Add Camping
+            </legend>
+            <!-- CREATE NEW EXPENSE FORM -->
+            <form class="slds-form_stacked">
+                <lightning:input aura:id="campingform" label="Camping Name" name="campingname" value="{!v.newItem.Name}"
+                    required="true" />
+                <lightning:input type="number" aura:id="campingform" label="Price" name="campingprice"
+                    formatter="currency" step="0.01" value="{!v.newItem.Price__c}" />
+                <lightning:input type="number" aura:id="campingform" label="Quantity" name="campingquantity" min="1"
+                    step="1" messageWhenRangeUnderflow="Enter the quantity that's at least 1."
+                    value="{!v.newItem.Quantity__c}" />
+                <lightning:input type="checkbox" aura:id="campingform" label="Packed?" name="campingpacked"
+                    checked="{!v.newItem.Packed__c}" />
+                <lightning:button label="Create Item" class="slds-m-top_medium" variant="brand"
+                    onclick="{!c.clickCreateItem}" />
+            </form>
+            <!-- / CREATE NEW EXPENSE FORM -->
+        </fieldset>
+        <!-- / BOXED AREA -->
+    </div>
+    <!-- / CREATE NEW EXPENSE -->
+    <c:campingListDisplay items="{!v.items}"/>
+</aura:component>
