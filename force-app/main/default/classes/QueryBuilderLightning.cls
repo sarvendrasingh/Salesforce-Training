@@ -7,7 +7,7 @@ public with sharing class QueryBuilderLightning {
       objects.add(sObjectType.getDescribe().getName());
     }
     objects.sort();
-    System.debug(objects);
+    // System.debug(objects);
     return objects;
   }
   @AuraEnabled

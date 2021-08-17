@@ -1,0 +1,12 @@
+<aura:component controller="GetCustomObjectsController">
+
+    <aura:attribute name="dualOptions" type="List" />
+    <aura:attribute name="selectedObjects" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <lightning:dualListbox name="objects" label="Select Custom Objects:" sourceLabel="Available Objects"
+        selectedLabel="Selected objects" fieldLevelHelp="Select Custom Objects:" options="{!v.dualOptions}"
+        value="{!v.selectedObjects}" />
+    <lightning:button variant="brand" label="EXPORT" onclick="{!c.downloadFile}" />
+
+</aura:component>
