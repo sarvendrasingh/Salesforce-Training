@@ -2,7 +2,7 @@ public class deleteMarked implements Database.Batchable<sObject>, Database.State
   public Database.QueryLocator start(Database.BatchableContext bc) {
     Date myDate = Date.today().addDays(-2);
     return Database.getQueryLocator(
-      'SELECT ID,Name from Student__c where Is_Registration_Completed__c = false and CreatedDate <= myDate  ' //:myDate or myDate
+      'SELECT ID,Name from Student__c where Is_Registration_Completed__c = false and CreatedDate <= :myDate  ' //:myDate or myDate
     );
   }
   public void execute(Database.BatchableContext bc, List<Student__c> scope) {
