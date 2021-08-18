@@ -4,7 +4,7 @@ public class AnimalLocator {
     Http http = new Http();
     HttpRequest request = new HttpRequest();
     request.setEndpoint(
-      'https://th-apex-http-callout.herokuapp.com/animals' + animalId
+      'https://th-apex-http-callout.herokuapp.com/animals/' + animalId
     );
     request.setMethod('GET');
     HttpResponse response = http.send(request);
